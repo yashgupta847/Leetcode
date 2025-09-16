@@ -1,6 +1,6 @@
 Leetcode 2405 - Optimal Partition of String (Java)
 
-🎯 Problem StatementGiven a string s, partition it into unique segments according to the following procedure:
+Problem StatementGiven a string s, partition it into unique segments according to the following procedure:
 
 
 
@@ -12,13 +12,13 @@ Return an array of strings segments, where segments[i] is the ith segment create
 
 
 
-✅ My Solution , I solved this using a custom idea. I used a visit[] array to mark which characters are already used. Also used a HashSet to make sure the substrings we add are not repeated.
+My Solution , I solved this using a custom idea. I used a visit[] array to mark which characters are already used. Also used a HashSet to make sure the substrings we add are not repeated.
 
 This logic passed all 732 testcases on Leetcode. I didn’t copy any solution and built this completely on my own logic.
 
-⚙️ Runtime: 232 ms📅 Submitted on: July 5, 2025👨‍💻 Author: Yash Gupta (Yash0100)
+ Runtime: 232 ms Submitted on: July 5, 2025  Author: Yash Gupta (Yash0100)
 
-✨ Highlights
+ Highlights
 
 No letter is repeated in any part
 
