@@ -22,9 +22,26 @@ class Solution {
         int j = word2.length();
         if (i == 0 && j == 0)
             return 0;
-        int[][] dp = new int[i][j];
-        for (int[] dp1 : dp)
-            Arrays.fill(dp1, -1);
-        return f(word1, word2, i - 1, j - 1, dp);
+        int[][] dp = new int[i+1][j+1];
+        // for (int[] dp1 : dp)
+        //     Arrays.fill(dp1, -1);
+        // return f(word1, word2, i - 1, j - 1, dp);
+        for(int k = 0; k < dp.length ;k++){
+            dp[k][0] = k;
+        }
+        for(int p = 0; p < dp[0].length ;p++){
+            dp[0][p] = p;
+        }
+        for(int l = 1; l < dp.length ; l++){
+            for(int m = 1 ; m < dp[0].length ;m++){
+                if(word1.charAt(l-1) == word2.charAt(m-1)){
+                    dp[l][m] = dp[l-1][m-1];
+                } else {
+                    dp[l][m] = Math.min(1+dp[l-1][m-1] , Math.min(1+dp[l-1][m] , 1+dp[l][m-1]));
+                }
+            }
+        }
+        return dp[i][j];
+
     }
 }
