@@ -13,23 +13,38 @@ class Solution {
     }
 
     public int lengthOfLIS(int[] nums) {
-        int[] dp = new int[nums.length];
-        Arrays.fill(dp, 1);
-        int max = 1;
-        // for (int[] dp1 : dp)
-        //     Arrays.fill(dp1, -1);
-        // return f(nums, 0, -1, dp);
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = 0; j <= i - 1; j++) {
-                if (nums[i] > nums[j]) {
-                    dp[i] = Math.max(dp[i], 1 + dp[j]);
-                    max = Math.max(max, dp[i]);
+        // int[] dp = new int[nums.length];
+        // Arrays.fill(dp, 1);
+        // int max = 1;
+        // // for (int[] dp1 : dp)
+        // //     Arrays.fill(dp1, -1);
+        // // return f(nums, 0, -1, dp);
+        // for (int i = 0; i < nums.length; i++) {
+        //     for (int j = 0; j <= i - 1; j++) {
+        //         if (nums[i] > nums[j]) {
+        //             dp[i] = Math.max(dp[i], 1 + dp[j]);
+        //             // max = Math.max(max, dp[i]);
+        //         }
+        //     }
+        // }
+        
+        // return max;
+
+        //From Binary Search
+        ArrayList<Integer> ans = new ArrayList<>();
+        ans.add(nums[0]);
+        for(int i = 1; i < nums.length ; i++){
+            if(nums[i] > ans.get(ans.size()-1)){
+                ans.add(nums[i]);
+            } else {
+                for(int j = 0 ; j < i ;j++){
+                    if(ans.get(j) >= nums[i]) {
+                        ans.set(j , nums[i]);
+                        break;
+                    }
                 }
             }
         }
-        // for (int i = 0; i < dp.length; i++) {
-        //     max = Math.max(max, dp[i]);
-        // }
-        return max;
+        return ans.size();
     }
 }
