@@ -21,14 +21,13 @@ class Solution {
         int[] dp = new int[words.length];
         Arrays.fill(dp, 1);
         for (int i = 1; i < words.length; i++) {
-            int curr = words[i].length();
-
             for (int j = 0; j < i; j++) {
                 if (compare(words[i], words[j]) && dp[j] + 1 > dp[i]) {
                     dp[i] = dp[j] + 1;
                 }
-                maxi = Math.max(maxi, dp[i]);
+
             }
+            maxi = Math.max(maxi, dp[i]);
         }
         return maxi;
     }
