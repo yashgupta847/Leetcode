@@ -8,7 +8,12 @@ class Solution {
                     return a[0] - b[0];
                 });
         for (int i = 0; i < arr.length; i++) {
-            int count = Integer.bitCount(arr[i]);
+            String s = Integer.toBinaryString(arr[i]);
+            int count = 0;
+            for (int j = 0; j < s.length(); j++) {
+                if (s.charAt(j) == '1')
+                    count++;
+            }
             pq.add(new int[] { arr[i], count });
         }
         int i = 0;
@@ -17,5 +22,6 @@ class Solution {
             i++;
         }
         return arr;
+
     }
 }
