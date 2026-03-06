@@ -5,13 +5,6 @@ class Solution {
         int mid;
         int arr[] = new int[2];
         Arrays.fill(arr, -1);
-        // if (nums.length == 0)
-        //     return arr;
-        // if (nums.length == 1) {
-        //     if (nums[0] == target) {
-        //         return new int[] { 0, 0 };
-        //     }
-        // }
         while (high >= low) {
             mid = (low + high) / 2;
             if (nums[mid] >= target) {
@@ -21,13 +14,19 @@ class Solution {
             } else
                 low = mid + 1;
         }
-        int idx = arr[0];
-        if (idx == -1)
-            return new int[] { -1, -1 };
-        while (idx < nums.length && nums[idx] == target) {
-            arr[1] = idx;
-            idx++;
+        high = nums.length - 1;
+        low = 0;
+        if (arr[0] != -1) {
+            while (high >= low) {
+                mid = (low + high) / 2;
+                if (nums[mid] <= target) {
+                    if (nums[mid] == target)
+                        arr[1] = mid;
+                    low = mid + 1;
+                } else
+                    high = mid - 1;
+            }
         }
         return arr;
     }
-}   
+}
