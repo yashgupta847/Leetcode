@@ -1,13 +1,10 @@
 class Solution {
     public int bitwiseComplement(int n) {
-        String s = Integer.toBinaryString(n);
-        String s2 = "";
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '1')
-                s2 += '0';
-            else
-                s2 += '1';
-        }
-        return Integer.parseInt(s2, 2);
+        if (n == 0)
+            return 1;
+        int mask = n;
+        for (int i = 0; i <= 4; i++)
+            mask |= mask >> (1 << i);
+        return ~n & mask;
     }
 }
