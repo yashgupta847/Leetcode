@@ -1,23 +1,29 @@
 class Solution {
     public int i = 0;
-    public StringBuilder[] f(StringBuilder s, StringBuilder[] arr, char prev , int n) {
-        if(i == arr.length) return arr;
+
+    public StringBuilder[] f(StringBuilder s, StringBuilder[] arr, char prev, int n, int k) {
+
+        if (i == arr.length || i == k)
+            return arr;
         if (s.length() == n) {
             arr[i] = new StringBuilder(s);
             i++;
             return arr;
         }
+
         if (prev != 'a') {
             s.append('a');
-            arr = f(s, arr, 'a' , n);
+            arr = f(s, arr, 'a', n, k);
             s.deleteCharAt(s.length() - 1);
-        }  if (prev != 'b') {
+        }
+        if (prev != 'b') {
             s.append('b');
-            arr = f(s, arr, 'b' , n);
+            arr = f(s, arr, 'b', n, k);
             s.deleteCharAt(s.length() - 1);
-        } if(prev != 'c') {
+        }
+        if (prev != 'c') {
             s.append('c');
-            arr = f(s, arr, 'c' , n);
+            arr = f(s, arr, 'c', n, k);
             s.deleteCharAt(s.length() - 1);
         }
         return arr;
@@ -28,11 +34,13 @@ class Solution {
         if (k > arr.length)
             return "";
         StringBuilder s = new StringBuilder();
-        
+
         // int[] i = new int[1];
-        arr = f( s , arr , '\0' ,n);
-        Arrays.sort(arr);
-        return arr[k-1].toString();
+        arr = f(s, arr, '\0', n, k);
+        if (arr[k - 1] == null)
+            return "";
+        // Arrays.sort(arr);
+        return arr[k - 1].toString();
     }
 }
 
