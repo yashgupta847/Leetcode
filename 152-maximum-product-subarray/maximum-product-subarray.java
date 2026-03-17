@@ -1,23 +1,29 @@
 class Solution {
+    int ans = Integer.MIN_VALUE;
+
     public int maxProduct(int[] nums) {
-        int l = 0;
-        int ans = Integer.MIN_VALUE;
-        int p1 = 1;
-        int p2 = 1;
-        int r = nums.length - 1;
-        while (l < nums.length && r >= 0) {
-            p1 *= nums[l];
-            p2 *= nums[r];
-            ans = Math.max(ans, Math.max(p1, p2));
-            if (p1 == 0) {
-                p1 = 1;
-                // p2 = 1;
-            }
-            if (p2 == 0)
-                p2 = 1;
-            l++;
-            r--;
-        }
+        solve(nums, nums.length - 1);
         return ans;
+    }
+
+    public int[] solve(int[] nums, int i) {
+        if (i == 0) {
+            ans = nums[0];
+            return new int[]{nums[0], nums[0]};
+        }
+
+        int[] prev = solve(nums, i - 1);
+
+        int maxPrev = prev[0];
+        int minPrev = prev[1];
+
+        int curr = nums[i];
+
+        int maxCurr = Math.max(curr, Math.max(curr * maxPrev, curr * minPrev));
+        int minCurr = Math.min(curr, Math.min(curr * maxPrev, curr * minPrev));
+
+        ans = Math.max(ans, maxCurr);
+
+        return new int[]{maxCurr, minCurr};
     }
 }
