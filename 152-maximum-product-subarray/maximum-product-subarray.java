@@ -1,16 +1,23 @@
 class Solution {
     public int maxProduct(int[] nums) {
-     //   int[] p = Arrays.clone(nums);
-       // int max = p.sort()[p.length - 1];
-       int max = Integer.MIN_VALUE;
-        for (int i = 0; i < nums.length; i++) {
-            int product = 1;
-            for (int j = i; j < nums.length; j++) {
-                product *= nums[j];
-                if (product > max)
-                    max = product;
+        int l = 0;
+        int ans = Integer.MIN_VALUE;
+        int p1 = 1;
+        int p2 = 1;
+        int r = nums.length - 1;
+        while (l < nums.length && r >= 0) {
+            p1 *= nums[l];
+            p2 *= nums[r];
+            ans = Math.max(ans, Math.max(p1, p2));
+            if (p1 == 0) {
+                p1 = 1;
+                // p2 = 1;
             }
+            if (p2 == 0)
+                p2 = 1;
+            l++;
+            r--;
         }
-        return max;
+        return ans;
     }
 }
