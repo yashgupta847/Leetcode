@@ -1,44 +1,16 @@
 class Solution {
-    public boolean canPut(char[][] board, List<List<String>> ans, int idx, int i, int n) {
-        for (int j = 0; j < n; j++) {
-            if (board[j][i] == 'Q' && j != idx) {
+    public boolean canPut(char[][] board, List<List<String>> ans, int idx, int p, int n) {
+        for (int i = 0; i < idx; i++) {
+            if (board[i][p] == 'Q')
                 return false;
-            }
-            if (board[idx][j] == 'Q' && i != j) {
-                return false;
-            }
         }
-        int r = idx ; int c = i;
-        while (c + 1 < n && r + 1 < n) {
-            c++;
-            r++;
-            if (board[r][c] == 'Q')
+        for (int i = idx - 1, j = p - 1; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j] == 'Q')
                 return false;
-
         }
-        r = idx; c = i;
-        while (c - 1 >= 0 && r - 1 >= 0) {
-            c--;
-            r--;
-            if (board[r][c] == 'Q')
+        for (int i = idx - 1, j = p + 1; i >= 0 && j < n; i--, j++) {
+            if (board[i][j] == 'Q')
                 return false;
-
-        }
-        r = idx ; c = i;
-        while (r + 1 < n && c - 1 >= 0) {
-            r++;
-            c--;
-            if (board[r][c] == 'Q')
-                return false;
-
-        }
-        r = idx ; c = i;
-        while (r - 1 >= 0 && c + 1 < n) {
-            r--;
-            c++;
-            if (board[r][c] == 'Q')
-                return false;
-
         }
         return true;
     }
