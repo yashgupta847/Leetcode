@@ -15,8 +15,12 @@ class Solution {
             if (arr.size() == 3)
                 ans = Math.min(ans, Math.abs(arr.get(0) - arr.get(arr.size() - 1)));
             else if (arr.size() > 3) {
-                for (int i = 0; i < arr.size() - 2; i++) {
-                    ans = Math.min(ans, arr.get(i + 2) - arr.get(i));
+                int l = 0;
+                int r = 2;
+                while(r < arr.size()){
+                    ans = Math.min(ans, arr.get(r) - arr.get(l));
+                    r++;
+                    l++;
                 }
             }
         }
