@@ -10,7 +10,6 @@ class Solution {
         //     }
         // }
         int count = 0;
-        int[][] dirs = { { 0, 1 }, { 1, 0 }, { -1, 0 }, { 0, -1 } };
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == '1' && !visit[i][j]) {
@@ -22,15 +21,21 @@ class Solution {
                         int x = a[0];
                         int y = a[1];
                         visit[x][y] = true;
-                        for (int[] dir : dirs) {
-                            int p = dir[0];
-                            int r = dir[1];
-                            if (p + x < grid.length && r + y < grid[0].length && p + x >= 0 && r + y >= 0
-                                    && !visit[p + x][r + y] && grid[p + x][r + y] == '1') {
-                                q.add(new int[] { p + x, r + y });
-                                visit[p + x][r + y] = true;
-
-                            }
+                        if (x + 1 <= grid.length - 1 && grid[x + 1][y] == '1' && !visit[x + 1][y]) {
+                            q.add(new int[] { x + 1, y });
+                            visit[x + 1][y] = true;
+                        }
+                        if (y + 1 <= grid[0].length - 1 && grid[x][y + 1] == '1' && !visit[x][y + 1]) {
+                            q.add(new int[] { x, y + 1 });
+                            visit[x][1 + y] = true;
+                        }
+                        if (y - 1 >= 0 && grid[x][y - 1] == '1' && !visit[x][y - 1]) {
+                            q.add(new int[] { x, y - 1 });
+                            visit[x][y - 1] = true;
+                        }
+                        if (x - 1 >= 0 && grid[x - 1][y] == '1' && !visit[x - 1][y]) {
+                            q.add(new int[] { x - 1, y });
+                            visit[x - 1][y] = true;
                         }
                     }
                 }
