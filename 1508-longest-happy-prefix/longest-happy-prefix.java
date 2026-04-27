@@ -21,3 +21,5 @@ class Solution {
         return s.substring(0 , lps[s.length()-1]);
     }
 }
+
+// Y direct kmp algo se solve ho jaega !! YUHU
