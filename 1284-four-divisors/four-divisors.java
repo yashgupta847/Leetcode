@@ -19,6 +19,7 @@ class Solution {
                     ans += 2;
                 }
             }
+            if(ans > 4) return 0;
         }
         return ans;
     }
