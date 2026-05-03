@@ -2,13 +2,12 @@ class Solution {
     public boolean prime(int i) {
         // int 
         if (i <= 1) return false;
-        for (int j = 2; j < i; j++) {
+        for (int j = 2; j*j <= i; j++) {
             if(i % j == 0)
                 return false;
         }
         return true;
     }
-
     public int sumOfPrimesInRange(int n) {
         int r = 0;
         int actual = n;
