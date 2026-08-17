@@ -1,19 +1,24 @@
 class Solution {
+    // public int f(int[] nums, int idx) {
+
+    // }
+
     public int maxProduct(int[] nums) {
-        int p1 = 1;
-        int p2 = 1;
-        int l = 0;
-        int r = nums.length - 1;
-        int ans = Integer.MIN_VALUE;
-        while (l < nums.length && r >= 0) {
-            p1 *= nums[l++];
-            p2 *= nums[r--];
-            ans = Math.max(ans, Math.max(p1, p2));
-            if (p1 == 0)
-                p1 = 1;
-            if (p2 == 0)
-                p2 = 1;
+        if (nums.length == 1)
+            return nums[0];
+        int max = Integer.MIN_VALUE;
+        int[] res = new int[nums.length];
+        Arrays.fill(res, 1);
+        for (int i = 0; i < nums.length; i++) {
+            // res[i] = nums[i];
+            for (int j = i; j < nums.length; j++) {
+                res[i] *= nums[j];
+                if (max < res[i])
+                    max = res[i];
+            }
+            // if (max < res[i])
+            // max = res[i];
         }
-        return ans;
+        return max;
     }
 }
