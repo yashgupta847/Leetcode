@@ -1,1 +1,1 @@
-POTD Solution of leetcode
+Solutions of some leetcode problem
