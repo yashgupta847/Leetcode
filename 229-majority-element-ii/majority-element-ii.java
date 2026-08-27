@@ -1,41 +1,39 @@
 class Solution {
     public List<Integer> majorityElement(int[] nums) {
-        int ans1 = 0;
-        int res1 = 0;
-        int ans2 = 0;
-        int res2 = 0;
-        for (int n : nums) {
-            if (n == ans1) {
-                res1++;
-            } else if (n == ans2) {
-                res2++;
-            } else if (res1 == 0) {
-                ans1 = n;
-                res1 = 1;
-            } else if (res2 == 0) {
-                ans2 = n;
-                res2 = 1;
+        int curr1 = Integer.MAX_VALUE;
+        int curr2 = Integer.MAX_VALUE;
+        int cnt1 = 0;
+        int cnt2 = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (cnt1 == 0 && curr2 != nums[i]) {
+                cnt1 = 1;
+                curr1 = nums[i];
+            } else if (cnt2 == 0 && curr1 != nums[i]) {
+                cnt2 = 1;
+                curr2 = nums[i];
+            } else if (curr1 == nums[i]) {
+                cnt1++;
+            } else if (curr2 == nums[i]) {
+                cnt2++;
             } else {
-                res1--;
-                res2--;
+                cnt1--;
+                cnt2--;
             }
         }
-        res1 = 0;
-        res2 = 0;
-
-        for (int n : nums) {
-            if (n == ans1)
-                res1++;
-            else if (n == ans2)
-                res2++;
+        cnt1 = 0;
+        cnt2 = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == curr1) {
+                cnt1++;
+            } else if (nums[i] == curr2)
+                cnt2++;
         }
-
-        List<Integer> result = new ArrayList<>();
-        if (res1 > nums.length / 3)
-            result.add(ans1);
-        if (res2 > nums.length / 3)
-            result.add(ans2);
-
-        return result;
+        ArrayList<Integer> ans = new ArrayList<>();
+        if (cnt1 > nums.length / 3) {
+            ans.add(curr1);
+        }
+        if (cnt2 > nums.length / 3)
+            ans.add(curr2);
+        return ans;
     }
 }
