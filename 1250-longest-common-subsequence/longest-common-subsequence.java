@@ -1,18 +1,20 @@
 class Solution {
-    public int f(String a, String b, int x, int y, int[][] dp) {
-        if (x < 0 || y < 0)
-            return 0;
-        if (dp[x][y] != -1)
-            return dp[x][y];
-        if (a.charAt(x) == b.charAt(y))
-            return 1 + f(a, b, x - 1, y - 1, dp);
-        return dp[x][y] = Math.max(f(a, b, x - 1, y, dp), f(a, b, x, y - 1, dp));
+    public int f(String s1, String s2, int idx1, int idx2, int[][] dp) {
+        if (idx1 == s1.length() || idx2 == s2.length()) {
+            return dp[idx1][idx2] = 0;
+        }
+        if (dp[idx1][idx2] != -1)
+            return dp[idx1][idx2];
+        if (s1.charAt(idx1) == s2.charAt(idx2))
+            return 1 + f(s1, s2, idx1 + 1, idx2 + 1, dp);
+        return dp[idx1][idx2] = Math.max(f(s1, s2, idx1, idx2 + 1, dp), f(s1, s2, idx1 + 1, idx2, dp));
+
     }
 
     public int longestCommonSubsequence(String text1, String text2) {
-        int dp[][] = new int[text1.length()][text2.length()];
+        int[][] dp = new int[text1.length() + 1][text2.length() + 1];
         for (int[] dp1 : dp)
             Arrays.fill(dp1, -1);
-        return f(text1, text2, text1.length() - 1, text2.length() - 1, dp);
+        return f(text1, text2, 0, 0, dp);
     }
 }
