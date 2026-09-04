@@ -1,33 +1,28 @@
 class Solution {
-    public boolean f(String s, String p, int l, int r , Boolean[][] dp) {
-        if (l < 0 && r < 0)
+    public boolean f(String s, String p, int i, int j, Boolean[][] dp) {
+        if (i == s.length() && j == p.length())
             return true;
-        if (r < 0)
+        if (j == p.length())
             return false;
-        if (l < 0) {
-            for (int i = 0; i <= r; i++) {
-                if (p.charAt(i) != '*') {
+        if (i == s.length()) {
+            for (int k = j; k < p.length(); k++) {
+                if (p.charAt(k) != '*')
                     return false;
-                }
             }
-
             return true;
         }
-        if(dp[l][r] != null) return dp[l][r];
-
-        if (s.charAt(l) == p.charAt(r) || p.charAt(r) == '?')
-            return dp[l][r] = f(s, p, l - 1, r - 1 , dp);
-        else if (p.charAt(r) == '*') {
-            return dp[l][r] = f(s, p, l - 1, r , dp) || f(s, p, l, r - 1 , dp);
-        } else {
-            return false;
-        }
+        if(dp[i][j] != null) return dp[i][j];
+        if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '?')
+            return dp[i][j] = f(s, p, i + 1, j + 1, dp);
+        else if (p.charAt(j) == '*') {
+            return dp[i][j] = f(s, p, i, j + 1, dp) || f(s, p, i + 1, j, dp);
+        } else
+            return dp[i][j] = false;
     }
 
     public boolean isMatch(String s, String p) {
-        int l = s.length();
-        int r = p.length();
-        Boolean[][] dp = new Boolean[l][r];
-        return f(s, p, l - 1, r - 1 , dp);
+        Boolean[][] dp = new Boolean[s.length()][p.length()];
+
+        return f(s, p, 0, 0, dp);
     }
 }
