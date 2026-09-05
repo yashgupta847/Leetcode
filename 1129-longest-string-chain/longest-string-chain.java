@@ -1,34 +1,51 @@
 class Solution {
-    public boolean compare(String a, String b) {
-        if (a.length() != b.length() + 1)
+    public boolean compare(String[] words, int i, int j) {
+        if (words[i].length() != 1 + words[j].length()) {
             return false;
-
-        int i = 0, j = 0;
-        while (i < a.length()) {
-            if (j < b.length() && a.charAt(i) == b.charAt(j)) {
-                i++;
-                j++;
+        }
+        String a = words[i];
+        String b = words[j];
+        int l = 0;
+        int r = 0;
+        int diff = 0;
+        while (l < a.length() && r < b.length()) {
+            if (a.charAt(l) == b.charAt(r)) {
+                l++;
+                r++;
             } else {
-                i++;
+                diff++;
+
+                if (diff > 1)
+                    return false;
+
+                l++;
             }
         }
-        return j == b.length();
+        return true;
     }
 
     public int longestStrChain(String[] words) {
-        Arrays.sort(words, (a, b) -> a.length() - b.length());
-        int maxi = 1;
+        Arrays.sort(words, (a, b) -> b.length() - a.length());
         int[] dp = new int[words.length];
-        Arrays.fill(dp, 1);
-        for (int i = 1; i < words.length; i++) {
-            for (int j = 0; j < i; j++) {
-                if (compare(words[i], words[j]) && dp[j] + 1 > dp[i]) {
-                    dp[i] = dp[j] + 1;
-                }
-
-            }
-            maxi = Math.max(maxi, dp[i]);
+        // for (int[] dp1 : dp)
+        Arrays.fill(dp, -1);
+        int maxi = 1;
+        for (int i = 0; i < words.length; i++) {
+            maxi = Math.max(maxi, f(i, words, dp));
         }
         return maxi;
+    }
+
+    public int f(int idx, String[] words, int[] dp) {
+        if (dp[idx] != -1)
+            return dp[idx];
+
+        int ans = 1;
+        for (int j = idx + 1; j < words.length; j++) {
+            if (compare(words, idx, j)) {
+                ans = Math.max(ans, 1 + f(j, words, dp));
+            }
+        }
+        return dp[idx] = ans;
     }
 }
