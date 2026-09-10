@@ -1,42 +1,32 @@
 class Solution {
-
-    int[][] dp;
-    int[] arr;
-
-    public int maxCoins(int[] nums) {
-
-        int n = nums.length;
-
-        arr = new int[n + 2];
-        arr[0] = arr[n + 1] = 1;
-
-        for (int i = 0; i < n; i++) {
-            arr[i + 1] = nums[i];
-        }
-
-        dp = new int[n + 2][n + 2];
-        for (int[] dp1 : dp)
-            Arrays.fill(dp1, -1);
-
-        return solve(1, n);
-    }
-
-    public int solve(int i, int j) {
-        if (i > j)
+    public int f(int i, int j, int[] arr, int[][] dp) {
+        if (i >= j - 1)
             return 0;
-
         if (dp[i][j] != -1)
             return dp[i][j];
+        int ans = Integer.MIN_VALUE;
+        for (int k = i + 1; k < j; k++) {
+            int cost = arr[i] * arr[j] * arr[k] + f(i, k, arr, dp) + f(k, j, arr, dp);
+            ans = Math.max(cost, ans);
+        }
+        return dp[i][j] = ans;
+    }
 
-        int max = 0;
+    public int maxCoins(int[] nums) {
+        int arr[] = new int[nums.length + 2];
+        arr[0] = 1;
+        arr[arr.length - 1] = 1;
 
-        for (int k = i; k <= j; k++) {
-            int coins = arr[i - 1] * arr[k] * arr[j + 1]
-                    + solve(i, k - 1)
-                    + solve(k + 1, j);
-            max = Math.max(max, coins);
+        for (int i = 1; i < arr.length - 1; i++) {
+            arr[i] = nums[i - 1];
         }
 
-        return dp[i][j] = max;
+        int maxi = Integer.MIN_VALUE;
+        // for (int i = 1; i < arr.length-1; i++) {
+        int[][] dp = new int[arr.length][arr.length];
+        for (int[] dp1 : dp)
+            Arrays.fill(dp1, -1);
+        return f(0, arr.length - 1, arr, dp);
+        // }
     }
 }
