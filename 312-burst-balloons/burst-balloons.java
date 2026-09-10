@@ -1,7 +1,7 @@
 class Solution {
     public int f(int i, int j, int[] arr, int[][] dp) {
         if (i >= j - 1)
-            return 0;
+            return dp[i][j] = 0;
         if (dp[i][j] != -1)
             return dp[i][j];
         int ans = Integer.MIN_VALUE;
@@ -11,6 +11,14 @@ class Solution {
         }
         return dp[i][j] = ans;
     }
+
+    // public int fTab(int[] nums) {
+
+    //     for (int k = i + 1; k < j; k++) {
+    //         int cost = arr[i] * arr[j] * arr[k] + dp[i][k] + dp[k][j];
+    //         ans = Math.max(cost, ans);
+    //     }
+    // }
 
     public int maxCoins(int[] nums) {
         int arr[] = new int[nums.length + 2];
