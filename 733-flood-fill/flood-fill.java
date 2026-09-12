@@ -1,14 +1,14 @@
 class Solution {
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
-        int[][] ans = new int[image.length][image[0].length];
-        for (int i = 0; i < image.length; i++) {
-            for (int j = 0; j < image[0].length; j++) {
-                ans[i][j] = image[i][j];
-            }
-        }
+        // int[][] ans = new int[image.length][image[0].length];
+        // for (int i = 0; i < image.length; i++) {
+            // for (int j = 0; j < image[0].length; j++) {
+                // ans[i][j] = image[i][j];
+            // }
+        // }
         Queue<int[]> q = new LinkedList<>();
         q.add(new int[] { sr, sc, image[sr][sc] });
-        ans[sr][sc] = color;
+        image[sr][sc] = color;
         boolean[][] visited = new boolean[image.length][image[0].length];
         int[][] dirs = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
         while (!q.isEmpty()) {
@@ -16,7 +16,6 @@ class Solution {
             int x = a[0];
             int y = a[1];
             int nowColor = a[2];
-
             visited[x][y] = true;
             for (int[] dir : dirs) {
                 int nx = x + dir[0];
@@ -25,10 +24,10 @@ class Solution {
                         && image[nx][ny] == nowColor) {
                     visited[nx][ny] = true;
                     q.add(new int[] { nx, ny, image[nx][ny] });
-                    ans[nx][ny] = color;
+                    image[nx][ny] = color;
                 }
             }
         }
-        return ans;
+        return image;
     }
 }
