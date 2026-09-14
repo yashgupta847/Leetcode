@@ -2,21 +2,28 @@ class Solution {
     public boolean isBipartite(int[][] graph) {
         int[] color = new int[graph.length];
         Arrays.fill(color, -1);
-        Queue<int[]> q = new LinkedList<>();
+        boolean[] visited = new boolean[graph.length];
+        Queue<Integer> q = new LinkedList<>();
+
         for (int i = 0; i < graph.length; i++) {
-            if (color[i] == -1) {
-                q.add(new int[] { i, 0 });
-                color[i] = 0;
+            if (!visited[i]) {
+                q.add(i);
+                visited[i] = true;
+                color[i] = 1;
                 while (!q.isEmpty()) {
-                    int[] a = q.poll();
-                    int ele = a[0];
-                    int prevColor = a[1];
-                    for (int neigh : graph[ele]) {
-                        if (color[neigh] == prevColor) {
-                            return false;
-                        } else if (color[neigh] == -1) {
-                            color[neigh] = prevColor == 0 ? 1 : 0;
-                            q.add(new int[] { neigh, color[neigh] });
+                    int a = q.remove();
+                    for (int j = 0; j < graph[a].length; j++) {
+                        if (!visited[graph[a][j]]) {
+                            visited[graph[a][j]] = true;
+                            q.add(graph[a][j]);
+                            if (color[a] == 1) {
+                                color[graph[a][j]] = 0;
+
+                            } else
+                                color[graph[a][j]] = 1;
+                        } else if (visited[graph[a][j]]) {
+                            if (color[a] == color[graph[a][j]])
+                                return false;
                         }
                     }
                 }
@@ -24,5 +31,4 @@ class Solution {
         }
         return true;
     }
-
 }
