@@ -1,24 +1,27 @@
 class Solution {
-    public List<List<Integer>> combinationSum3(int k, int n) {
-        List<List<Integer>> ans = new ArrayList<>();
-        f(ans, k, n, new ArrayList<>(), 0);
-        return ans;
-    }
-
-    public void f(List<List<Integer>> ans, int k, int n, List<Integer> demo, int idx) {
+    public void f(HashSet<List<Integer>> ans, List<Integer> demo, int k, int n, int idx) {
         if (demo.size() == k) {
-            if (n == 0) {
+            if (n == 0)
                 ans.add(new ArrayList<>(demo));
-                return;
-            }
             return;
         }
-        for (int i = idx + 1; i <= 9; i++) {
+        for (int i = idx; i <= 9; i++) {
             demo.add(i);
-            f(ans, k, n - i, demo, i);
+            f(ans, demo, k, n - i, i + 1);
             demo.remove(demo.size() - 1);
-            // f(ans, k, n, demo, i);
+            f(ans, demo, k, n, i + 1);
         }
+    }
 
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        HashSet<List<Integer>> ans = new HashSet<>();
+        f(ans, new ArrayList<>(), k, n, 1);
+        List<List<Integer>> real = new ArrayList<>();
+        Iterator<List<Integer>> it = ans.iterator();
+        while(it.hasNext()){
+            real.add(new ArrayList<>(it.next()));
+            it.remove();
+        }
+        return real;
     }
 }
