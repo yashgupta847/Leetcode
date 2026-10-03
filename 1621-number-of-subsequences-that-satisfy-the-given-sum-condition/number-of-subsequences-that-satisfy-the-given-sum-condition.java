@@ -1,32 +1,24 @@
 class Solution {
-    public int mod = 1000000007;
-    public int power(int base, int exp) {
-        long res = 1;
-        long b = base;
-
-        while (exp > 0) {
-            if ((exp & 1) == 1) {
-                res = (res * b) % mod;
-            }
-            b = (b * b) % mod;
-            exp >>= 1;
-        }
-        return (int) res;
-    }
     public int numSubseq(int[] nums, int target) {
+        final long MOD = 1_000_000_007L;
         Arrays.sort(nums);
+        int n = nums.length;
+        long[] pow = new long[n];
+        pow[0] = 1;
+        for (int i = 1; i < n; i++) {
+            pow[i] = (pow[i - 1] * 2) % MOD;
+        }
         int l = 0;
-        int r = nums.length - 1;
-        int ans = 0;
+        int r = n - 1;
+        long ans = 0;
         while (l <= r) {
             if (nums[l] + nums[r] > target) {
                 r--;
-            } else if (nums[l] + nums[r] <= target) {
-                ans =(ans+ power(2, (r - l)))%mod;
+            } else {
+                ans = (ans + pow[r - l]) % MOD;
                 l++;
-
             }
         }
-        return ans;
+        return (int) ans;
     }
 }
