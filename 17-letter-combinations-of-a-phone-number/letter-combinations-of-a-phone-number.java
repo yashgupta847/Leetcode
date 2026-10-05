@@ -1,34 +1,30 @@
 class Solution {
+
     public List<String> letterCombinations(String digits) {
-        HashMap<Character, String> hs = new HashMap<>();
-        hs.put('2', "abc");
-        hs.put('3', "def");
-        hs.put('4', "ghi");
-        hs.put('5', "jkl");
-        hs.put('6', "mno");
-        hs.put('7', "pqrs");
-        hs.put('8', "tuv");
-        hs.put('9', "wxyz");
+        HashMap<Integer, String> hs = new HashMap<>();
         List<String> ans = new ArrayList<>();
-        if (digits.length() == 0)
-            return ans;
-        f(digits, 0, ans, new StringBuilder() , hs);
+        hs.put(2, "abc");
+        hs.put(3, "def");
+        hs.put(4, "ghi");
+        hs.put(5, "jkl");
+        hs.put(6, "mno");
+        hs.put(7, "pqrs");
+        hs.put(8, "tuv");
+        hs.put(9, "wxyz");
+        f(0, ans, hs, new StringBuilder(), digits);
         return ans;
     }
 
-    public void f(String digits, int idx, List<String> ans, StringBuilder st, HashMap<Character, String> hs) {
-        if (idx == digits.length()) {
+    public void f(int idx, List<String> ans, HashMap<Integer, String> hs, StringBuilder st, String digits) {
+        if(idx == digits.length()) {
             ans.add(st.toString());
             return;
         }
 
-        for (char ch : hs.get(digits.charAt(idx)).toCharArray()) {
+        for (char ch : hs.get(digits.charAt(idx) - '0').toCharArray()) {
             st.append(ch);
-            f(digits, idx + 1, ans, st, hs);
+            f(idx + 1, ans, hs, st, digits);
             st.deleteCharAt(st.length() - 1);
-
         }
-
     }
-
 }
