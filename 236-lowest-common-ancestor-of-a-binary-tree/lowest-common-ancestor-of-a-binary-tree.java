@@ -29,15 +29,17 @@ class Solution {
         ArrayList<TreeNode> qvalapath = new ArrayList<>();
         find(p, pvalapath, root);
         find(q, qvalapath, root);
-        int l = pvalapath.size() - 2;
-        int r = qvalapath.size() - 2;
-        for (int i = pvalapath.size() - 1; i >= 0; i--) {
-            for (int j = qvalapath.size() - 1; j >= 0; j--) {
-                if (pvalapath.get(i) == qvalapath.get(j)) {
-                    return pvalapath.get(i);
-                }
+        TreeNode lca = root;
+        for (int i = 0;
+             i < Math.min(pvalapath.size(), qvalapath.size()); i++) {
+
+            if (pvalapath.get(i) == qvalapath.get(i)) {
+                lca = pvalapath.get(i);
+            } else {
+                break;
             }
         }
-        return root;
+
+        return lca;
     }
 }
