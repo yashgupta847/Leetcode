@@ -1,26 +1,22 @@
 class Solution {
-    int m, n;
-    int[][] grid;
-    Integer[][][] dp;
-
-    public int f(int i, int j, int xor) {
-        if (i >= m || j >= n)
+    public int f(int[][] grid, int i, int j , int xor , Integer[][][] dp) {       
+        if (i >= grid.length || j >= grid[0].length) {
             return Integer.MAX_VALUE;
+        }
         xor ^= grid[i][j];
-        if (i == m - 1 && j == n - 1)
+        if (i == grid.length - 1 && j == grid[0].length - 1) {
             return xor;
-        if (dp[i][j][xor] != null)
-            return dp[i][j][xor];
-        int right = f(i, j + 1, xor);
-        int down = f(i + 1, j, xor);
-        return dp[i][j][xor] = Math.min(right, down);
-    }
+        }
 
+        if(dp[i][j][xor] != null) return dp[i][j][xor];
+
+        int down = f(grid, i + 1, j , xor , dp);
+        int right = f(grid, i, j + 1 , xor , dp);
+        int ans = Math.min(down, right);
+        return dp[i][j][xor] = ans;
+    }
     public int minCost(int[][] grid) {
-        this.grid = grid;
-        m = grid.length;
-        n = grid[0].length;
-        dp = new Integer[m][n][1024];
-        return f(0, 0, 0);
+        Integer[][][] dp = new Integer[grid.length][grid[0].length][1024];
+        return f(grid, 0, 0 , 0 ,dp);
     }
 }
